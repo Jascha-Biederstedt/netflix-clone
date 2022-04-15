@@ -4,22 +4,10 @@ import styles from '../styles/Home.module.css';
 import NavBar from '../components/navbar/NavBar';
 import Banner from '../components/banner/banner';
 import SectionCards from '../components/sectionCards/SectionCards';
+import { getVideos } from '../lib/videos';
 
 export default function Home() {
-  const disneyVideos = [
-    {
-      imgUrl: '/static/clifford.webp',
-    },
-    {
-      imgUrl: '/static/clifford.webp',
-    },
-    {
-      imgUrl: '/static/clifford.webp',
-    },
-    {
-      imgUrl: '/static/clifford.webp',
-    },
-  ];
+  const disneyVideos = getVideos();
 
   return (
     <div>
