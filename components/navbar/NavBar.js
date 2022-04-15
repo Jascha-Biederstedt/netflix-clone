@@ -1,9 +1,23 @@
 import React from 'react';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 import Image from 'next/image';
 
 import styles from './NavBar.module.css';
 
 const NavBar = ({ username }) => {
+  const router = useRouter();
+
+  const handleOnClickHome = e => {
+    e.preventDefault();
+    router.push('/');
+  };
+
+  const handleOnClickMyList = e => {
+    e.preventDefault();
+    router.push('browse/my-list');
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -18,8 +32,12 @@ const NavBar = ({ username }) => {
           </div>
         </a>
         <ul className={styles.navItems}>
-          <li className={styles.navItem}>Home</li>
-          <li className={styles.navItem2}>My List</li>
+          <li className={styles.navItem} onClick={handleOnClickHome}>
+            Home
+          </li>
+          <li className={styles.navItem2} onClick={handleOnClickMyList}>
+            My List
+          </li>
         </ul>
         <nav className={styles.navContainer}>
           <div>
@@ -29,7 +47,9 @@ const NavBar = ({ username }) => {
             </button>
             <div className={styles.navDropdown}>
               <div>
-                <a className={styles.linkName}>Sign Out</a>
+                <Link href="/login">
+                  <a className={styles.linkName}>Sign Out</a>
+                </Link>
                 <div className={styles.lineWrapper}></div>
               </div>
             </div>
