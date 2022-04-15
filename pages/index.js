@@ -4,11 +4,10 @@ import styles from '../styles/Home.module.css';
 import NavBar from '../components/navbar/NavBar';
 import Banner from '../components/banner/banner';
 import SectionCards from '../components/sectionCards/SectionCards';
-import Card from '../components/card/Card';
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>Netflix Clone</title>
         <meta name="description" content="Netflix clone to discover videos" />
@@ -23,11 +22,9 @@ export default function Home() {
         imgUrl="/static/clifford.webp"
       />
 
-      <SectionCards />
-
-      <Card imgUrl="/static/clifford.webp" size="large" />
-      <Card imgUrl="/static/clifford.webp" size="medium" />
-      <Card imgUrl="/static/clifford.webp" size="small" />
+      <div className={styles.sectionWrapper}>
+        <SectionCards title="Disney" />
+      </div>
     </div>
   );
 }
