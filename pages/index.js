@@ -7,7 +7,7 @@ import SectionCards from '../components/sectionCards/SectionCards';
 import { getVideos } from '../lib/videos';
 
 export const getServerSideProps = async () => {
-  const disneyVideos = getVideos();
+  const disneyVideos = await getVideos('disney trailer');
 
   return { props: { disneyVideos } };
 };
