@@ -6,9 +6,13 @@ import Banner from '../components/banner/banner';
 import SectionCards from '../components/sectionCards/SectionCards';
 import { getVideos } from '../lib/videos';
 
-export default function Home() {
+export const getServerSideProps = async () => {
   const disneyVideos = getVideos();
 
+  return { props: { disneyVideos } };
+};
+
+export default function Home({ disneyVideos }) {
   return (
     <div>
       <Head>
