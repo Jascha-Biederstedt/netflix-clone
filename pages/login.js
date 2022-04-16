@@ -11,12 +11,12 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <Head>
         <title>Netflix Sign In</title>
       </Head>
 
-      <header>
+      <header className={styles.header}>
         <div className={styles.headerWrapper}>
           <a className={styles.logoLink} href="/">
             <div className={styles.logoWrapper}>
@@ -39,8 +39,10 @@ const Login = () => {
             type="text"
             placeholder="Email address"
           />
-          <p className={styles.userMsg}>Enter a valid email address</p>
-          <p>You'll receive a link for passwordless authentication</p>
+          <p className={styles.userMsg}>Please enter a valid email address</p>
+          <p className={styles.userNotice}>
+            You'll receive a link for passwordless authentication.
+          </p>
           <button className={styles.loginBtn} onClick={handleLoginWithEmail}>
             Sign In
           </button>
