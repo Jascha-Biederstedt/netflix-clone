@@ -1,10 +1,11 @@
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
 
 import NavBar from '../components/navbar/NavBar';
 import Banner from '../components/banner/banner';
 import SectionCards from '../components/sectionCards/SectionCards';
 import { getVideos, getPopularVideos } from '../lib/videos';
+
+import styles from '../styles/Home.module.css';
 
 export const getServerSideProps = async () => {
   const disneyVideos = await getVideos('disney trailer');
