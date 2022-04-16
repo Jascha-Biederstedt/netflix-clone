@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -7,10 +7,11 @@ import { magic } from '../lib/magic-client';
 import styles from '../styles/Login.module.css';
 
 const Login = () => {
-  // const router = useRouter();
+  const router = useRouter();
 
   const [email, setEmail] = useState('');
   const [userMsg, setUserMsg] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleOnChangeEmail = e => {
     setUserMsg('');
@@ -25,21 +26,39 @@ const Login = () => {
 
     if (email.match(validRegex)) {
       if (email === 'jascha1510@gmail.com') {
-        // router.push('/');
         try {
+          setIsLoading(true);
+
           const didToken = await magic.auth.loginWithMagicLink({
             email,
           });
 
-          console.log({ didToken });
+          if (didToken) {
+            router.push('/');
+          }
         } catch (error) {
           console.error('Something went wrong logging in', error);
+          setIsLoading(false);
         }
       }
     } else {
       setUserMsg('Please enter a valid email address');
     }
   };
+
+  const handleOnComplete = () => {
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    router.events.on('routeChangeComplete', handleOnComplete);
+    router.events.on('routeChangeError', handleOnComplete);
+
+    return () => {
+      router.events.off('routeChangeComplete', handleOnComplete);
+      router.events.off('routeChangeError', handleOnComplete);
+    };
+  }, [router]);
 
   return (
     <div className={styles.container}>
@@ -76,7 +95,7 @@ const Login = () => {
             You'll receive a link for passwordless login.
           </p>
           <button className={styles.loginBtn} onClick={handleLoginWithEmail}>
-            Sign In
+            {isLoading ? 'Loading...' : 'Sign In'}
           </button>
         </div>
       </main>
