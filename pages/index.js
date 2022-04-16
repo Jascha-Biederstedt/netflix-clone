@@ -4,20 +4,24 @@ import styles from '../styles/Home.module.css';
 import NavBar from '../components/navbar/NavBar';
 import Banner from '../components/banner/banner';
 import SectionCards from '../components/sectionCards/SectionCards';
-import { getVideos } from '../lib/videos';
+import { getVideos, getPopularVideos } from '../lib/videos';
 
 export const getServerSideProps = async () => {
   const disneyVideos = await getVideos('disney trailer');
   const travelVideos = await getVideos('travel');
   const productivityVideos = await getVideos('productivity');
+  const popularVideos = await getPopularVideos();
 
-  return { props: { disneyVideos, travelVideos, productivityVideos } };
+  return {
+    props: { disneyVideos, travelVideos, productivityVideos, popularVideos },
+  };
 };
 
 export default function Home({
   disneyVideos,
   travelVideos,
   productivityVideos,
+  popularVideos,
 }) {
   return (
     <div>
@@ -43,7 +47,7 @@ export default function Home({
           videos={productivityVideos}
           size="medium"
         />
-        <SectionCards title="Popular" videos={disneyVideos} size="small" />
+        <SectionCards title="Popular" videos={popularVideos} size="small" />
       </div>
     </div>
   );
