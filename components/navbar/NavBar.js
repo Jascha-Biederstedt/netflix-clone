@@ -38,6 +38,19 @@ const NavBar = () => {
     }
   };
 
+  const handleSignOut = async e => {
+    e.preventDefault();
+
+    try {
+      await magic.user.logout();
+      console.log(await magic.user.isLoggedIn()); // => `false`
+      router.push('/login');
+    } catch (error) {
+      console.error('Something went wrong', error);
+      router.push('/login');
+    }
+  };
+
   useEffect(() => {
     handleGetUserEmail();
   }, []);
@@ -77,9 +90,9 @@ const NavBar = () => {
             {showDropdown && (
               <div className={styles.navDropdown}>
                 <div>
-                  <Link href="/login">
-                    <a className={styles.linkName}>Sign Out</a>
-                  </Link>
+                  <a className={styles.linkName} onClick={handleSignOut}>
+                    Sign Out
+                  </a>
                   <div className={styles.lineWrapper}></div>
                 </div>
               </div>
