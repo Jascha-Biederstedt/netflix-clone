@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import styles from '../styles/Login.module.css';
 
 const Login = () => {
+  const router = useRouter();
+
   const [email, setEmail] = useState('');
   const [userMsg, setUserMsg] = useState('');
 
@@ -20,7 +23,9 @@ const Login = () => {
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     if (email.match(validRegex)) {
-      console.log('valid email');
+      if (email === 'test@test.com') {
+        router.push('/');
+      }
     } else {
       setUserMsg('Please enter a valid email address');
     }
