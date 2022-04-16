@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { magic } from '../lib/magic-client';
 
 import styles from '../styles/Login.module.css';
 
 const Login = () => {
-  const router = useRouter();
+  // const router = useRouter();
 
   const [email, setEmail] = useState('');
   const [userMsg, setUserMsg] = useState('');
@@ -16,15 +17,24 @@ const Login = () => {
     setEmail(e.target.value);
   };
 
-  const handleLoginWithEmail = e => {
+  const handleLoginWithEmail = async e => {
     e.preventDefault();
 
     const validRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     if (email.match(validRegex)) {
-      if (email === 'test@test.com') {
-        router.push('/');
+      if (email === 'jascha1510@gmail.com') {
+        // router.push('/');
+        try {
+          const didToken = await magic.auth.loginWithMagicLink({
+            email,
+          });
+
+          console.log({ didToken });
+        } catch (error) {
+          console.error('Something went wrong logging in', error);
+        }
       }
     } else {
       setUserMsg('Please enter a valid email address');
