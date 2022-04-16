@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 
 import styles from '../styles/Login.module.css';
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [userMsg, setUserMsg] = useState('');
+
+  const handleOnChangeEmail = e => {
+    setUserMsg('');
+    setEmail(e.target.value);
+  };
+
   const handleLoginWithEmail = e => {
-    e.preventDeafult();
-    console.log('test');
+    e.preventDefault();
+
+    const validRegex =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    if (email.match(validRegex)) {
+      console.log('valid email');
+    } else {
+      setUserMsg('Please enter a valid email address');
+    }
   };
 
   return (
@@ -36,12 +52,13 @@ const Login = () => {
           <h1 className={styles.signinHeader}>Sign In</h1>
           <input
             className={styles.emailInput}
-            type="text"
+            type="email"
             placeholder="Email address"
+            onChange={handleOnChangeEmail}
           />
-          <p className={styles.userMsg}>Please enter a valid email address</p>
+          <p className={styles.userMsg}>{userMsg}</p>
           <p className={styles.userNotice}>
-            You'll receive a link for passwordless authentication.
+            You'll receive a link for passwordless login.
           </p>
           <button className={styles.loginBtn} onClick={handleLoginWithEmail}>
             Sign In
