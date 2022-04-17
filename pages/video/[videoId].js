@@ -4,21 +4,17 @@ import classNames from 'classnames';
 
 import NavBar from '../../components/navbar/NavBar';
 
+import { getYouTubeVideoById } from '../../lib/videos';
+
 import styles from '../../styles/Video.module.css';
 
 export async function getStaticProps() {
-  const video = {
-    title: 'Hi cute dog',
-    publishTime: '1990-01-01',
-    description:
-      'This is the description for the very cute dog Clifford lorem ipsumieuvriue iwueciquiuqbwibiwb weiucbiubcibqcibiqwbcibqwicbiqcb echbuwbczbwucbuzbwzcbzububoqbpbiqwpbuvuibwqekjnb viuiubibjbivbaiusghvisubhewijfThis is the description for the very cute dog Clifford lorem ipsumieuvriue iwueciquiuqbwibiwb weiucbiubcibqcibiqwbcibqwicbiqcb echbuwbczbwucbuzbwzcbzububoqbpbiqwpbuvuibwqekjnb viuiubibjbivbaiusghvisubhewijfThis is the description for the very cute dog Clifford lorem ipsumieuvriue iwueciquiuqbwibiwb weiucbiubcibqcibiqwbcibqwicbiqcb echbuwbczbwucbuzbwzcbzububoqbpbiqwpbuvuibwqekjnb viuiubibjbivbaiusghvisubhewijfThis is the description for the very cute dog Clifford lorem ipsumieuvriue iwueciquiuqbwibiwb weiucbiubcibqcibiqwbcibqwicbiqcb echbuwbczbwucbuzbwzcbzububoqbpbiqwpbuvuibwqekjnb viuiubibjbivbaiusghvisubhewijfThis is the description for the very cute dog Clifford lorem ipsumieuvriue iwueciquiuqbwibiwb weiucbiubcibqcibiqwbcibqwicbiqcb echbuwbczbwucbuzbwzcbzububoqbpbiqwpbuvuibwqekjnb viuiubibjbivbaiusghvisubhewijfThis is the description for the very cute dog Clifford lorem ipsumieuvriue iwueciquiuqbwibiwb weiucbiubcibqcibiqwbcibqwicbiqcb echbuwbczbwucbuzbwzcbzububoqbpbiqwpbuvuibwqekjnb viuiubibjbivbaiusghvisubhewijfThis is the description for the very cute dog Clifford lorem ipsumieuvriue iwueciquiuqbwibiwb weiucbiubcibqcibiqwbcibqwicbiqcb echbuwbczbwucbuzbwzcbzububoqbpbiqwpbuvuibwqekjnb viuiubibjbivbaiusghvisubhewijfThis is the description for the very cute dog Clifford lorem ipsumieuvriue iwueciquiuqbwibiwb weiucbiubcibqcibiqwbcibqwicbiqcb echbuwbczbwucbuzbwzcbzububoqbpbiqwpbuvuibwqekjnb viuiubibjbivbaiusghvisubhewijfThis is the description for the very cute dog Clifford lorem ipsumieuvriue iwueciquiuqbwibiwb weiucbiubcibqcibiqwbcibqwicbiqcb echbuwbczbwucbuzbwzcbzububoqbpbiqwpbuvuibwqekjnb viuiubibjbivbaiusghvisubhewijfThis is the description for the very cute dog Clifford lorem ipsumieuvriue iwueciquiuqbwibiwb weiucbiubcibqcibiqwbcibqwicbiqcb echbuwbczbwucbuzbwzcbzububoqbpbiqwpbuvuibwqekjnb viuiubibjbivbaiusghvisubhewijfThis is the description for the very cute dog Clifford lorem ipsumieuvriue iwueciquiuqbwibiwb weiucbiubcibqcibiqwbcibqwicbiqcb echbuwbczbwucbuzbwzcbzububoqbpbiqwpbuvuibwqekjnb viuiubibjbivbaiusghvisubhewijfThis is the description for the very cute dog Clifford lorem ipsumieuvriue iwueciquiuqbwibiwb weiucbiubcibqcibiqwbcibqwicbiqcb echbuwbczbwucbuzbwzcbzububoqbpbiqwpbuvuibwqekjnb viuiubibjbivbaiusghvisubhewijf',
-    channelTitle: 'Paramount Picture',
-    viewCount: 100000,
-  };
+  const videoId = '4zH5iYM4wJo';
+  const videoArray = await getYouTubeVideoById(videoId);
 
   return {
     props: {
-      video,
+      video: videoArray.length > 0 ? videoArray[0] : {},
     },
     revalidate: 10,
   };
@@ -36,7 +32,13 @@ export async function getStaticPaths() {
 
 const Video = ({ video }) => {
   const router = useRouter();
-  const { title, publishTime, description, channelTitle, viewCount } = video;
+  const {
+    title,
+    publishTime,
+    description,
+    channelTitle,
+    statistics: { viewCount },
+  } = video;
 
   return (
     <div>
