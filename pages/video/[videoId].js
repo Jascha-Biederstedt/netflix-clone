@@ -8,8 +8,8 @@ import { getYouTubeVideoById } from '../../lib/videos';
 
 import styles from '../../styles/Video.module.css';
 
-export async function getStaticProps() {
-  const videoId = '4zH5iYM4wJo';
+export async function getStaticProps(context) {
+  const videoId = context.params.videoId;
   const videoArray = await getYouTubeVideoById(videoId);
 
   return {
@@ -37,7 +37,7 @@ const Video = ({ video }) => {
     publishTime,
     description,
     channelTitle,
-    statistics: { viewCount },
+    statistics: { viewCount } = { viewCount: 0 },
   } = video;
 
   return (
