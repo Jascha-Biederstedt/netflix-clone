@@ -6,9 +6,7 @@ import NavBar from '../../components/navbar/NavBar';
 
 import styles from '../../styles/Video.module.css';
 
-const Video = () => {
-  const router = useRouter();
-
+export async function getStaticProps() {
   const video = {
     title: 'Hi cute dog',
     publishTime: '1990-01-01',
@@ -18,6 +16,26 @@ const Video = () => {
     viewCount: 100000,
   };
 
+  return {
+    props: {
+      video,
+    },
+    revalidate: 10,
+  };
+}
+
+export async function getStaticPaths() {
+  const listOfVideos = ['mYfJxlgR2jw', '4zH5iYM4wJo', 'KCPEHsAViiQ'];
+
+  const paths = listOfVideos.map(videoId => ({
+    params: { videoId },
+  }));
+
+  return { paths, fallback: 'blocking' };
+}
+
+const Video = ({ video }) => {
+  const router = useRouter();
   const { title, publishTime, description, channelTitle, viewCount } = video;
 
   return (
