@@ -25,21 +25,34 @@ const Login = () => {
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     if (email.match(validRegex)) {
-      if (email === 'jascha1510@gmail.com') {
-        try {
-          setIsLoading(true);
+      try {
+        setIsLoading(true);
 
-          const didToken = await magic.auth.loginWithMagicLink({
-            email,
+        const didToken = await magic.auth.loginWithMagicLink({
+          email,
+        });
+
+        if (didToken) {
+          const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${didToken}`,
+              'Content-Type': 'application/json',
+            },
           });
 
-          if (didToken) {
+          const loggedInResponse = await response.json();
+
+          if (loggedInResponse.done) {
             router.push('/');
+          } else {
+            console.error('Something went wrong logging in');
+            setIsLoading(false);
           }
-        } catch (error) {
-          console.error('Something went wrong logging in', error);
-          setIsLoading(false);
         }
+      } catch (error) {
+        console.error('Something went wrong logging in', error);
+        setIsLoading(false);
       }
     } else {
       setUserMsg('Please enter a valid email address');
