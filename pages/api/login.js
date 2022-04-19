@@ -1,3 +1,5 @@
+import { magicAdmin } from '../../lib/magic';
+
 const login = async (req, res) => {
   if (req.method === 'POST') {
     try {
