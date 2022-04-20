@@ -14,7 +14,12 @@ const SectionCards = ({ title, videos = [], size }) => {
           return (
             <Link href={`/video/${video.id}`}>
               <a>
-                <Card key={idx} id={idx} imgUrl={video.imgUrl} size={size} />
+                <Card
+                  key={video.id}
+                  id={idx}
+                  imgUrl={video.imgUrl}
+                  size={size}
+                />
               </a>
             </Link>
           );
