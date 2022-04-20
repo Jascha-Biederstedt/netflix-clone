@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import classNames from 'classnames';
 
 import NavBar from '../../components/navbar/NavBar';
+import Like from '../../components/icons/Like';
+import Dislike from '../../components/icons/Dislike';
 
 import { getYouTubeVideoById } from '../../lib/videos';
 
@@ -54,6 +56,21 @@ const Video = ({ video }) => {
           src={`http://www.youtube.com/embed/${router.query.videoId}?enablejsapi=1&origin=http://example.com&controls=0&rel=1`}
           frameborder="0"
         ></iframe>
+
+        <div className={styles.likeDislikeBtnWrapper}>
+          <div className={styles.likeBtnWrapper}>
+            <button>
+              <div className={styles.btnWrapper}>
+                <Like />
+              </div>
+            </button>
+          </div>
+          <button>
+            <div className={styles.btnWrapper}>
+              <Dislike />
+            </div>
+          </button>
+        </div>
 
         <div className={styles.videoDescription}>
           <div className={styles.col1}>
