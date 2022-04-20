@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import classNames from 'classnames';
 
@@ -35,6 +35,8 @@ export async function getStaticPaths() {
 const Video = ({ video }) => {
   const router = useRouter();
 
+  const videoId = router.query.videoId;
+
   const [toggleLike, setToggleLike] = useState(false);
   const [toggleDislike, setToggleDislike] = useState(false);
 
@@ -46,15 +48,52 @@ const Video = ({ video }) => {
     statistics: { viewCount } = { viewCount: 0 },
   } = video;
 
+  const getUserRating = async () => {
+    const response = await fetch(`/api/stats?videoId=${videoId}`, {
+      method: 'GET',
+    });
+    const data = await response.json();
+
+    if (data.length > 0) {
+      const favourited = data[0].favourited;
+      if (favourited === 1) {
+        setToggleLike(true);
+      } else if (favourited === 0) {
+        setToggleDislike(true);
+      }
+    }
+  };
+
+  const runRatingService = async liked => {
+    return await fetch('/api/stats', {
+      method: 'POST',
+      body: JSON.stringify({
+        videoId,
+        favourited: liked ? 1 : 0,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  };
+
   const handleToggleLike = () => {
     setToggleLike(true);
     setToggleDislike(false);
+
+    runRatingService(true);
   };
 
   const handleToggleDislike = () => {
     setToggleLike(false);
     setToggleDislike(true);
+
+    runRatingService(false);
   };
+
+  useEffect(() => {
+    getUserRating();
+  }, []);
 
   return (
     <div>
@@ -67,7 +106,7 @@ const Video = ({ video }) => {
           type="text/html"
           width="99%"
           height="360"
-          src={`http://www.youtube.com/embed/${router.query.videoId}?enablejsapi=1&origin=http://example.com&controls=0&rel=1`}
+          src={`http://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=http://example.com&controls=0&rel=1`}
           frameborder="0"
         ></iframe>
 
