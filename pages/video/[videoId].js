@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import classNames from 'classnames';
 
@@ -34,6 +34,10 @@ export async function getStaticPaths() {
 
 const Video = ({ video }) => {
   const router = useRouter();
+
+  const [toggleLike, setToggleLike] = useState(false);
+  const [toggleDislike, setToggleDislike] = useState(false);
+
   const {
     title,
     publishTime,
@@ -41,6 +45,16 @@ const Video = ({ video }) => {
     channelTitle,
     statistics: { viewCount } = { viewCount: 0 },
   } = video;
+
+  const handleToggleLike = () => {
+    setToggleLike(true);
+    setToggleDislike(false);
+  };
+
+  const handleToggleDislike = () => {
+    setToggleLike(false);
+    setToggleDislike(true);
+  };
 
   return (
     <div>
@@ -59,15 +73,15 @@ const Video = ({ video }) => {
 
         <div className={styles.likeDislikeBtnWrapper}>
           <div className={styles.likeBtnWrapper}>
-            <button>
+            <button onClick={handleToggleLike}>
               <div className={styles.btnWrapper}>
-                <Like />
+                <Like selected={toggleLike} />
               </div>
             </button>
           </div>
-          <button>
+          <button onClick={handleToggleDislike}>
             <div className={styles.btnWrapper}>
-              <Dislike />
+              <Dislike selected={toggleDislike} />
             </div>
           </button>
         </div>
