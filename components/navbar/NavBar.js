@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import Image from 'next/image';
 import { magic } from '../../lib/magic-client';
 
@@ -10,6 +9,7 @@ const NavBar = () => {
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
   const [username, setUsername] = useState('');
+  const [didToken, setDidToken] = useState('');
 
   const handleOnClickHome = e => {
     e.preventDefault();
@@ -29,9 +29,10 @@ const NavBar = () => {
   const handleGetUserEmail = async () => {
     try {
       const { email } = await magic.user.getMetadata();
-
+      const didToken = await magic.user.getIdToken();
       if (email) {
         setUsername(email);
+        setDidToken(didToken);
       }
     } catch (error) {
       console.error('Error retrieving email', error);
@@ -42,11 +43,17 @@ const NavBar = () => {
     e.preventDefault();
 
     try {
-      await magic.user.logout();
-      console.log(await magic.user.isLoggedIn()); // => `false`
-      router.push('/login');
+      const response = await fetch('/api/logout', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${didToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const res = await response.json();
     } catch (error) {
-      console.error('Something went wrong', error);
+      console.error('Error logging out', error);
       router.push('/login');
     }
   };
@@ -91,9 +98,8 @@ const NavBar = () => {
               <div className={styles.navDropdown}>
                 <div>
                   <a className={styles.linkName} onClick={handleSignOut}>
-                    Sign Out
+                    Sign Out of Netflix
                   </a>
-                  <div className={styles.lineWrapper}></div>
                 </div>
               </div>
             )}
