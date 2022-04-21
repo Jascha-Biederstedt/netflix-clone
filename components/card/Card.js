@@ -9,6 +9,7 @@ const Card = ({
   imgUrl = '/static/error_movie_image.jpg',
   size = 'medium',
   id,
+  shouldScale = true,
 }) => {
   const classMap = {
     large: styles.lgItem,
@@ -20,6 +21,10 @@ const Card = ({
 
   const scale = id === 0 ? { scaleY: 1.1 } : { scale: 1.1 };
 
+  const shouldHover = shouldScale && {
+    whileHover: { ...scale },
+  };
+
   const handleOnError = () => {
     setImgSrc('/static/error_movie_image.jpg');
   };
@@ -28,7 +33,7 @@ const Card = ({
     <div className={styles.container}>
       <motion.div
         className={classNames(classMap[size], styles.imgMotionWrapper)}
-        whileHover={{ ...scale }}
+        {...shouldHover}
       >
         <Image
           src={imgSrc}
