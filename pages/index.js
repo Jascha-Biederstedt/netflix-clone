@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 import NavBar from '../components/navbar/NavBar';
-import Banner from '../components/banner/banner';
+import Banner from '../components/banner/Banner';
 import SectionCards from '../components/sectionCards/SectionCards';
 import {
   getVideos,
