@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { magic } from '../lib/magic-client';
 
@@ -81,16 +82,18 @@ const Login = () => {
 
       <header className={styles.header}>
         <div className={styles.headerWrapper}>
-          <a className={styles.logoLink} href="/">
-            <div className={styles.logoWrapper}>
-              <Image
-                src="/static/netflix.svg"
-                alt="Netflix logo"
-                width="128px"
-                height="34px"
-              />
-            </div>
-          </a>
+          <Link href="/">
+            <a className={styles.logoLink}>
+              <div className={styles.logoWrapper}>
+                <Image
+                  src="/static/netflix.svg"
+                  alt="Netflix logo"
+                  width="128px"
+                  height="34px"
+                />
+              </div>
+            </a>
+          </Link>
         </div>
       </header>
 
@@ -105,7 +108,7 @@ const Login = () => {
           />
           <p className={styles.userMsg}>{userMsg}</p>
           <p className={styles.userNotice}>
-            You'll receive a link for passwordless login.
+            You will receive a link for passwordless login.
           </p>
           <button className={styles.loginBtn} onClick={handleLoginWithEmail}>
             {isLoading ? 'Loading...' : 'Sign In'}

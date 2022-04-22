@@ -3,13 +3,13 @@ import Head from 'next/head';
 
 import NavBar from '../../components/navbar/NavBar';
 import SectionCards from '../../components/sectionCards/SectionCards';
-import useRedirectUser from '../../utils/redirectUser';
+import redirectUser from '../../utils/redirectUser';
 import { getMyList } from '../../lib/videos';
 
 import styles from '../../styles/MyList.module.css';
 
 export async function getServerSideProps(context) {
-  const { userId, token } = await useRedirectUser(context);
+  const { userId, token } = await redirectUser(context);
   const videos = await getMyList(userId, token);
 
   return {

@@ -8,12 +8,12 @@ import {
   getPopularVideos,
   getWatchItAgainVideos,
 } from '../lib/videos';
-import useRedirectUser from '../utils/redirectUser';
+import redirectUser from '../utils/redirectUser';
 
 import styles from '../styles/Home.module.css';
 
-export const getServerSideProps = async context => {
-  const { userId, token } = await useRedirectUser(context);
+export async function getServerSideProps(context) {
+  const { userId, token } = await redirectUser(context);
 
   const disneyVideos = await getVideos('disney trailer');
   const watchItAgainVideos = await getWatchItAgainVideos(userId, token);
@@ -30,7 +30,7 @@ export const getServerSideProps = async context => {
       popularVideos,
     },
   };
-};
+}
 
 export default function Home({
   disneyVideos,
