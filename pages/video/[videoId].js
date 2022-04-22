@@ -106,7 +106,7 @@ const Video = ({ video }) => {
           type="text/html"
           width="99%"
           height="360"
-          src={`http://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=http://example.com&controls=0&rel=1`}
+          src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=http://example.com&controls=0&rel=1`}
           frameBorder="0"
         ></iframe>
 
